@@ -4,6 +4,7 @@ import com.victolee.signuplogin.domain.Role;
 import com.victolee.signuplogin.domain.entity.MemberEntity;
 import com.victolee.signuplogin.domain.repository.MemberRepository;
 import com.victolee.signuplogin.dto.MemberDto;
+import com.victolee.signuplogin.exception.UserAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +31,11 @@ public class MemberService implements UserDetailsService {
         // 비밀번호 암호화
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
+
+        Optional<MemberEntity> members = memberRepository.findByEmail(memberDto.getEmail());
+        if(!members.isEmpty()){
+            throw new UserAlreadyExistsException("user already exists");
+        }
 
         return memberRepository.save(memberDto.toEntity()).getId();
     }
@@ -48,4 +55,10 @@ public class MemberService implements UserDetailsService {
 
         return new User(userEntity.getEmail(), userEntity.getPassword(), authorities);
     }
+
+    public MemberEntity findUserById(Long id) throws UsernameNotFoundException{
+        Optional<MemberEntity> userEntityWrapper = memberRepository.findById(id);
+        return userEntityWrapper.get();
+    }
+
 }

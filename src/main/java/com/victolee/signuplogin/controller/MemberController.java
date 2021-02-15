@@ -1,6 +1,7 @@
 package com.victolee.signuplogin.controller;
 
 import com.victolee.signuplogin.dto.MemberDto;
+import com.victolee.signuplogin.exception.WrongPasswordConfirmException;
 import com.victolee.signuplogin.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,11 @@ public class MemberController {
 
     // 회원가입 처리
     @PostMapping("/user/signup")
-    public String execSignup(MemberDto memberDto) {
+    public String execSignup(MemberDto memberDto, String password1) {
+
+        if(!memberDto.getPassword().contentEquals(password1)){
+            throw new WrongPasswordConfirmException("confirm your password again");
+        }
         memberService.joinUser(memberDto);
 
         return "redirect:/user/login";
