@@ -1,5 +1,6 @@
 package com.victolee.signuplogin.config;
 
+import com.victolee.signuplogin.dto.MemberDto;
 import com.victolee.signuplogin.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception
     {
         // static 디렉터리의 하위 파일 목록은 인증 무시 ( = 항상통과 )
-        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
+        web.ignoring().antMatchers("/static/css/**", "/js/**", "/img/**", "/lib/**");
     }
 
     @Override
@@ -56,5 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+
+        /* MemberDto member = new MemberDto(0L, "admin@example.com", "admin");
+        Long memberId = memberService.joinUser(member);
+         */
     }
 }

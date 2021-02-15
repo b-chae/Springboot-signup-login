@@ -3,14 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>메인</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" >
 </head>
 <body>
-    <h1>메인 페이지</h1>
-    <hr>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-    <a sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-    <a sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
-    <a sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
-    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
+    <h class="text-2xl font-bold mx-auto w-full text-center flex justify-center my-10">메인 페이지</h>
+    <div class="flex flex-col sm:w-full md:w-1/2 lg:w-1/2 mx-auto justify-center">
+    <a class="btn_link mb-5" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+    <a class="btn_link mb-5" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+    <a class="btn_link mb-5" sec:authorize="isAnonymous()" th:href="@{/user/signup}">회원가입</a>
+    <a class="btn_link mb-5" sec:authorize="hasRole('ROLE_MEMBER')" th:href="@{/user/info}">내정보</a>
+    <a class="btn_link mb-5" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">어드민</a>
+    </div>
 </body>
 </html>
