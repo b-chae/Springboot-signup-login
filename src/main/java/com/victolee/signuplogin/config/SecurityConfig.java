@@ -58,8 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
 
-        /* MemberDto member = new MemberDto(0L, "admin@example.com", "admin");
-        Long memberId = memberService.joinUser(member);
-         */
+        /*MemberDto member = new MemberDto(0L, "admin@example.com", "admin");
+        Long memberId = memberService.joinUser(member);*/
     }
 }

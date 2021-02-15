@@ -61,4 +61,14 @@ public class MemberService implements UserDetailsService {
         return userEntityWrapper.get();
     }
 
+    public MemberEntity findUserByUsername(String username) throws UsernameNotFoundException{
+        Optional<MemberEntity> userEntityWrapper = memberRepository.findByEmail(username);
+        return userEntityWrapper.get();
+    }
+
+    public Long UpdateUser(MemberEntity memberEntity){
+        Long id = memberRepository.save(memberEntity).getId();
+        return id;
+    }
+
 }

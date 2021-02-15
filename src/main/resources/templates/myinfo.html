@@ -1,12 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>내정보</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css" >
 </head>
 <body>
-    <h1>내정보 확인 페이지입니다.</h1>
+    <h class="font-bold text-2xl flex justify-center">내정보 확인 페이지입니다.</h>
+
+    <div class="mx-auto container shadow my-5 flex flex-col justify-center text-center text-xl font-light">
+    <p class="my-1" th:text="${'Email : ' + user.getEmail()}"></p>
+    <p class="my-1" th:text="${'Bio : ' + user.getBio()}"></p>
+    <p class="my-1" th:text="${'User : ' + user.getGender()}"></p>
+    <p class="my-1" th:text="${'Birthdate : ' + user.getBirthdate()}"></p>
+        <a class="mb-3 font-bold text-green-400 hover:text-green-200 hover:underline" th:href="@{'/user/update-profile'}" >Edit Profile</a>
+    </div>
     <hr>
 </body>
 </html>
