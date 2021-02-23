@@ -44,4 +44,9 @@ public class MemberEntity {
         this.gender = gender;
         this.birthdate = birthdate;
     }
+
+    public Date getBirthdate() {
+        birthdate.toString();
+        return birthdate;
+    }
 }

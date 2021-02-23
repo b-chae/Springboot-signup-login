@@ -5,6 +5,8 @@ import com.victolee.signuplogin.dto.MemberDto;
 import com.victolee.signuplogin.exception.WrongPasswordConfirmException;
 import com.victolee.signuplogin.service.MemberService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -14,9 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.lang.reflect.Member;
 import java.text.DateFormat;
+import java.util.Date;
 
 @Controller
 @AllArgsConstructor
@@ -116,9 +120,8 @@ public class MemberController {
     }
 
     @PostMapping("/user/update-profile/post")
-    public String updateProfilePost(@ModelAttribute MemberEntity member, Model model){
+    public String updateProfilePost(@ModelAttribute MemeberRequest member, Model model){
 
-        System.out.println("!!!!!!!" + member.getBio());
         MemberEntity me;
 
         try{
@@ -133,10 +136,7 @@ public class MemberController {
             return "redirect:/user/login";
         }
 
-        me.setBio(member.getBio());
-        me.setGender(member.getGender());
-        me.setBirthdate(member.getBirthdate());
-        memberService.UpdateUser(me);
+        memberService.UpdateUser(me.getId(), member.getBio(), member.getGender(), member.getBirthdate());
 
         return "redirect:/user/info";
     }
@@ -145,5 +145,13 @@ public class MemberController {
     @GetMapping("/admin")
     public String dispAdmin() {
         return "/admin";
+    }
+
+    @Data
+    static class MemeberRequest {
+        String bio;
+        String gender;
+        @DateTimeFormat(pattern = "yyyy-mm-dd")
+        Date birthdate;
     }
 }

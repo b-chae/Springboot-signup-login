@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Member;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,4 +72,12 @@ public class MemberService implements UserDetailsService {
         return id;
     }
 
+    @Transactional
+    public Long UpdateUser(Long id, String bio, String gender, Date birthdate) {
+        MemberEntity member = memberRepository.findById(id).orElseThrow(UserAlreadyExistsException::new);
+        member.setBio(bio);
+        member.setGender(gender);
+        member.setBirthdate(birthdate);
+        return member.getId();
+    }
 }
